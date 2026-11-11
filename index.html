@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>WebGIS Hunian Mahasiswa UNISSULA</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css"></head>
+<body>
+<main>
+<div id="map" role="application" aria-label="Peta interaktif"></div>
+<button id="tog" type="button" aria-controls="panel" aria-expanded="true" aria-label="Tutup panel"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+<aside id="panel" aria-label="Panel data">
+ <div id="grab" tabindex="0" role="button" aria-label="Tarik atau ketuk untuk membuka dan menutup panel"><span></span></div>
+ <header class="hd">
+  <div class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></div>
+  <div><h1>Hunian mahasiswa UNISSULA</h1><p>Keterjangkauan halte BRT · radius 300 m</p></div>
+ </header>
+ <div id="pbody">
+  <section id="stats" class="card" aria-live="polite"></section>
+  <section class="card">
+   <h2>Aksi</h2>
+   <div class="acts">
+    <button id="addK" class="pri">+ Tambah kos</button><button id="addH" class="pri alt">+ Tambah halte</button>
+    <button id="addG">Kos di lokasi saya (GPS)</button><button id="autoH">Halte otomatis (OSM)</button>
+   </div>
+   <label class="chk"><input type="checkbox" id="snap"> Kunci klik ke garis grid <span id="snapinfo"></span></label>
+   <p class="sub" id="hint">Perubahan tersimpan di browser ini. Ekspor GeoJSON untuk menyimpannya permanen.</p>
+  </section>
+  <section class="card">
+   <h2>Cari dan filter</h2>
+   <label for="q">Cari kos atau halte</label><input id="q" type="search" placeholder="Nama, alamat, wilayah, atau ID" autocomplete="off">
+   <div id="hasil"></div>
+   <div class="two">
+    <div><label for="st">Status</label><select id="st"><option value="">Semua</option><option value="terjangkau">Terjangkau (≤ 300 m)</option><option value="tidak_terjangkau">Tidak terjangkau (&gt; 300 m)</option></select></div>
+    <div><label for="kl">Wilayah</label><select id="kl"><option value="">Semua</option></select></div>
+   </div>
+  </section>
+  <section class="card">
+   <h2>Ringkasan per wilayah</h2>
+   <table id="tb"><thead><tr><th>Wilayah</th><th>Kos</th><th>Terjangkau</th><th>%</th></tr></thead><tbody></tbody></table>
+  </section>
+  <details class="card"><summary>Data dan ekspor</summary>
+   <div class="acts"><button id="exG">Ekspor GeoJSON</button><button id="exC">Ekspor CSV kos</button><button id="imp">Impor GeoJSON</button><button id="rst" class="warn">Kembalikan data awal</button></div>
+   <input id="file" type="file" accept=".geojson,.json" hidden>
+  </details>
+  <details class="card"><summary>Sumber data dan catatan</summary>
+   <p>Lokasi kos: survei lapangan melalui formulir, dibersihkan dengan proses_survei.py (lihat Audit_Data_Survei_Kos_UNISSULA.xlsx). Peta dasar: © OpenStreetMap contributors (ODbL).</p>
+   <p>Titik berbingkai kuning: koordinat diperbaiki otomatis dan belum diverifikasi. Halte diambil dari OpenStreetMap, periksa dan koreksi lewat popup halte bila perlu.</p>
+   <p>Kolom wilayah adalah isian responden, bukan kelurahan resmi. Hasil berlaku untuk sampel kos yang terdata, bukan seluruh hunian mahasiswa. Jarak lurus (bukan jarak berjalan kaki) dihitung di browser dengan rumus bola, selisih dengan hitungan UTM kecil untuk jarak 300 m.</p>
+  </details>
+ </div>
+</aside>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body></html>
